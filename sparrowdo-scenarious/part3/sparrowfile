@@ -1,0 +1,20 @@
+use v6;
+
+use Sparrowdo;
+
+task_run  %(
+  task => 'create user',
+  plugin => 'user',
+  parameters => %( name => 'foo' )
+);
+
+task_run  %(
+  task => 'install 2 modules',
+  plugin => 'cpan-package',
+  parameters => %(
+    list => 'CGI DBI', 
+    user => 'foo',
+    install-base => '~/'
+  ),
+);
+
