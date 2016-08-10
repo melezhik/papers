@@ -90,3 +90,6 @@ troubleshoot nginx server issues.
     
 ![nginx-master-process](https://raw.githubusercontent.com/melezhik/papers/master/nginx-master-process.png)
 
+A [proc-validate](https://sparrowhub.org/info/proc-validate) plugin takes 2 parameters at input. The first one is the path to file where PID is written,
+and the second optional one - Perl regular expression to identify a process at process tree. Even providing only the first parameter is enough but
+I also set a _footprint_ to make my example more explanatory.
