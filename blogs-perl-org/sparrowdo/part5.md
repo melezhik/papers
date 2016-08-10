@@ -33,4 +33,4 @@ Let's have a nginx web server get installed on your system:
 We talked about `package-generic` plugin at [this post](http://blogs.perl.org/users/melezhik/2016/07/sparrowdo-automation-part-3-installing-system-packages.html).
 We use this plugin to install system packages.
 
-![install nginx server]()
+![install nginx server](https://raw.githubusercontent.com/melezhik/papers/master/nginx-install.png)
