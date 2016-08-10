@@ -2,9 +2,15 @@ use v6;
 
 use Sparrowdo;
 
-task_run  %(
-  task => 'install nginx server',
-  plugin => 'package-generic',
-  parameters => %( list => 'nginx' )
+task_run %(
+  task => 'enable nginx service',
+  plugin => 'service',
+  parameters => %( action => 'enable', service => 'nginx' )
+);
+
+task_run %(
+  task => 'start nginx service',
+  plugin => 'service',
+  parameters => %( action => 'start', service => 'nginx' )
 );
 

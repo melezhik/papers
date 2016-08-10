@@ -1,6 +1,6 @@
 HI!
 
-This time I want to tell you how to manage services and proccess using sparrowdo.
+This time I want to tell you how to manage services and processes using sparrowdo.
 
 Before this post a following list of topics was written by me:
 
@@ -15,7 +15,7 @@ Before this post a following list of topics was written by me:
 
 As services are highly coupled with processes we will investigate them in one post.
 
-Let's have a nginx web server get installed on your system:
+Let's have an [nginx](https://nginx.org) web server gets installed on your system:
 
     $ cat sparrowfile
   
@@ -34,3 +34,39 @@ We talked about `package-generic` plugin at [this post](http://blogs.perl.org/us
 We use this plugin to install system packages.
 
 ![install nginx server](https://raw.githubusercontent.com/melezhik/papers/master/nginx-install.png)
+
+
+Ok. This is very logical now having installed an nginx to make it "bootable", so next reboot of our system
+will pickup an nginx and make it sure it runs too. Some people call this autoload:
+
+
+
+    $ cat sparrowfile
+  
+    use v6;
+
+    use Sparrowdo;
+
+    task_run %(
+      task => 'enable nginx service',
+      plugin => 'service',
+      parameters => %( action => 'enable', service => 'nginx' )
+    );
+    
+    task_run %(
+      task => 'start nginx service',
+      plugin => 'service',
+      parameters => %( action => 'start', service => 'nginx' )
+    );
+    
+![nginx-up-and-running](https://raw.githubusercontent.com/melezhik/papers/master/nginx-up-and-running.png)
+
+A [service](https://sparrowhub.org/info/service) plugin makes it possible to enable and disabling Linux services, as well as starting and stopping them.
+It's very simple yet useful plugin for those who wants to automate Linux services on target hosts. 
+
+At example here we not only make it nginx autoloadable enabling it, but also make it sure it starts. So good so far.
+
+
+
+
+
