@@ -1,0 +1,10 @@
+use v6;
+
+use Sparrowdo;
+
+task_run  %(
+  task => 'install nginx server',
+  plugin => 'package-generic',
+  parameters => %( list => 'nginx' )
+);
+
