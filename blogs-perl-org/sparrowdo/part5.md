@@ -40,7 +40,6 @@ Ok. This is very logical now having installed an nginx to make it "bootable", so
 will pickup an nginx and make it sure it runs too. Some people call this autoload:
 
 
-
     $ cat sparrowfile
   
     use v6;
@@ -62,11 +61,32 @@ will pickup an nginx and make it sure it runs too. Some people call this autoloa
 ![nginx-up-and-running](https://raw.githubusercontent.com/melezhik/papers/master/nginx-up-and-running.png)
 
 A [service](https://sparrowhub.org/info/service) plugin makes it possible to enable and disabling Linux services, as well as starting and stopping them.
-It's very simple yet useful plugin for those who wants to automate Linux services on target hosts. 
+It's very simple yet useful plugin for those who want to automate Linux services on target hosts. 
 
 At example here we not only make it nginx autoloadable enabling it, but also make it sure it starts. So good so far.
 
+Well time goes and we need to ensure that nginx server is running. There are more than one way to do this.
+
+The simplest one is to look up in a processes tree a _service_ related to nginx master. This is what I usually do first  when 
+troubleshoot nginx server issues.
 
 
+    $ cat sparrowfile
+  
+    use v6;
 
+    use Sparrowdo;
+
+    task_run  %(
+      task => 'check my nginx master process',
+      plugin => 'proc-validate',
+      parameters => %(
+        pid_file => '/var/run/nginx.pid',
+        footprint => 'nginx.*master'
+      )
+    );
+
+    
+    
+![nginx-master-process](https://raw.githubusercontent.com/melezhik/papers/master/nginx-master-process.png)
 

@@ -1,16 +1,13 @@
-use v6;
+    use v6;
 
-use Sparrowdo;
+    use Sparrowdo;
 
-task_run %(
-  task => 'enable nginx service',
-  plugin => 'service',
-  parameters => %( action => 'enable', service => 'nginx' )
-);
-
-task_run %(
-  task => 'start nginx service',
-  plugin => 'service',
-  parameters => %( action => 'start', service => 'nginx' )
-);
+    task_run  %(
+      task => 'check my nginx master process',
+      plugin => 'proc-validate',
+      parameters => %(
+        pid_file => '/var/run/nginx.pid',
+        footprint => 'nginx.*master'
+      )
+    );
 
