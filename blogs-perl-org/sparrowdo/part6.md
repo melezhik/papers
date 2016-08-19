@@ -80,5 +80,41 @@ Let's write code then:
     
     }
     
+Ok. The code is quite simple, I just want to add some vital comments here.
+
+* Sparrowdo modules are plain Perl6 modules.
+
+* You need to load `Sparrowdo` module to export some sparrowdo API function, like task\_run or others.
+
+* You have to define _at least_ a tasks(%args) function gets called when someone else use your modules, see later
+
+* You optionally may handle some arguments get passed into your module, see tasks function signature.
+
+
+* And finally sparrowdo module is just a container for some sparrowdo tasks get called sequentially .
+
+Ok. now lets use our new sparrowdo module.
+
+First step we need to ensure that module installed at the server where from we are going to run a sparrowdo tasks:
+
+    $ panda install Sparrowdo::Nginx
+
+Ok when we are ready with module install we have two ways here. 
+
+1. running module as is
+
+2. using module inside sparrowdo scenario.
+
+
+# Running module as is
+
+
+This is the simplest way. This is very similar to running ansible modules way:
+
+    sparrowdo --host=127.0.0.1 --module_run=Nginx 
+
+![install nginx server](https://raw.githubusercontent.com/melezhik/papers/master/nginx-module-run.png)
+
+
 
 
