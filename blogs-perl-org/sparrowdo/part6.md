@@ -27,8 +27,8 @@ sparrowdo tasks.
 Well here is the list to recall a few:
 
 
-- System packages - package generic plugin
-- CPAN packages - package plugin
+- System packages - package-generic plugin
+- CPAN packages - cpan-package plugin
 - Users and groups - are user and group plugin
 - Linux Services are represented by service plugin
 - And more and more and more ...
