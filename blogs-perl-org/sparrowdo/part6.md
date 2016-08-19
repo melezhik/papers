@@ -1,4 +1,3 @@
-
 Sparrowdo modules - getting a bigger things using light primitives.
 
 This is what have been seen before:
@@ -109,12 +108,100 @@ Ok when we are ready with module install we have two ways here.
 # Running module as is
 
 
-This is the simplest way. This is very similar to running ansible modules way:
+This is the simplest way. This is very similar to running ansible modules:
 
     sparrowdo --host=127.0.0.1 --module_run=Nginx 
 
 ![install nginx server](https://raw.githubusercontent.com/melezhik/papers/master/nginx-module-run.png)
 
 
+# Running module via sparrowfile
+
+Of course one can just use sparrowdo module using sparrowdo API
+
+    $ cat sparrowfile
+
+    run_module 'Nginx';
+
+
+Sparrowdo uses a convention about modules names, it cut a Sparrowdo:: prefix from module name when run it
+via run\_module function.  So the rule is simple:
+
+    | Module Perl6 Name | Run_module $name parameter |
+    +-------------------+----------------------------+
+    | Sparrow::Foo::Bar | 'Foo::Bar'                 |
+
+
+A current version of [Sparrowdo::Nginx](https://github.com/melezhik/sparrowdo-nginx) ignore
+an arguments, one day it would be possible to call 'Nginx' module with parameters:
+
+
+    run_module 'Nginx', %( port => 81 );
+
+
+# Little helpers for developers life
+
+Sparrowdo provides some essentials helpers to simplify some developers tasks.
+
+## Guessing a target OS
+
+It's very usual when we need to know a target server OS name to make a right decision about 
+server configuration. Let me show you. Recall Nginx module, for centos we need install
+a repository so nginx package is not here by default:
+
+  our sub tasks (%args) {
+
+    if target_os() ~~ m/centos/ {
+  
+      task_run  %(
+        task => 'install epel-release',
+        plugin => 'package-generic',
+        parameters => %( list => 'epel-release' )
+      );
+    
+    }
+
+
+## Passing a sparrowdo command line parameters
+
+Remember a [post](http://blogs.perl.org/users/melezhik/2016/07/sparrowdo-automation-part-2-dealing-with-http-proxy-servers.html) on installing CPAN packages on the servers with http proxy restrictions?
+
+Consider this sparrwodo module to install CPAN modules:
+
+
+    use v6;
+    
+    unit module Sparrowdo::CpanInstall;
+    
+    use Sparrowdo;
+    
+    our sub tasks (%args) {
+    
+      task_run  %(
+        task => 'install cpan modules',
+        plugin => 'cpan-package',
+        parameters => %( 
+          list => %args<list>,
+          http_proxy => input_params('HttpProxy'), 
+          https_proxy => input_params('HttpsProxy'), 
+        )
+      );
+    
+    }
+    
+And sparrowfile:
+
+  
+    module_run 'CpanInstall' %(
+      list => 'DBI Moose Mojolicios'
+    );
+
+
+And finally sparrowdo scenario run:
+
+
+    $ sparrwodo --host=<$some-host> --http_proxy=<$http_proxy>  --https_proxy=<$https_proxy>
+
+An `input_params($param_name)` function will pass all the environment back to Sparrowdo::CpanInstall module.
 
 
