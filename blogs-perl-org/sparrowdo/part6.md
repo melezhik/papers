@@ -193,7 +193,7 @@ And sparrowfile:
 
   
     module_run 'CpanInstall' %(
-      list => 'DBI Moose Mojolicios'
+      list => 'DBI Moose Mojolicious'
     );
 
 
@@ -202,6 +202,24 @@ And finally sparrowdo scenario run:
 
     $ sparrwodo --host=<$some-host> --http_proxy=<$http_proxy>  --https_proxy=<$https_proxy>
 
-An `input_params($param_name)` function will pass all the environment back to Sparrowdo::CpanInstall module.
+An `input_params($param_name)` function will pass all the sparrowdo client parameters back to Sparrowdo::CpanInstall module.
 
+
+# Conclusion
+
+Sparrowdo modules are high level members of sparrowdo echo system. What is good they are just
+Perl6 modules. Anybody who codes at Perl6 could easily start a new ones ( a basic knowledge of existed sparrow plugins is required though ). 
+
+Here is a short list of my ones:
+
+  [https://modules.perl6.org/#q=Sparrowdo%3A%3A](https://modules.perl6.org/#q=Sparrowdo%3A%3A)
+
+
+Will be happy to see a new members of Sparrowdo::* family at Perl6 modules repository.
+
+Regards and have a good weekend.
+
+---
+
+Alexey Melezhik 
 
