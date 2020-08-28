@@ -1,7 +1,6 @@
 # Raku-utils project
 
-Sparrow is a Raku based automation tool comes with the idea of Sparrow plugins - small reusable pieces of code,
-runs as command line or Raku function.
+[Sparrow](https://github.com/melezhik/Sparrow6) is a Raku based automation tool comes with the idea of Sparrow [plugins](https://github.com/melezhik/sparrow-plugins) - small reusable pieces of code, runs as command line or Raku function.
 
 Raku:
 
