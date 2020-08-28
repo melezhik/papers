@@ -1,7 +1,7 @@
 # Raku-utils project
 
-Sparrow is Raku based automation tool comes with the idea of Sparrow plugins - small reusable pieces of code,
-runs as command line utilities or Raku function.
+Sparrow is a Raku based automation tool comes with the idea of Sparrow plugins - small reusable pieces of code,
+runs as command line or Raku function.
 
 Raku:
 
@@ -17,8 +17,9 @@ Cli:
     $ s6 --plg-run name@bird=Sparrow
 
 
-One can even create _wrappers_ for existing command line tools converting them into Raku function:
+One can even create _wrappers_ for existing command line tools converting them into Raku functions:
 
+Wrapper code:
 
     $ cat task.bash
 
@@ -32,17 +33,16 @@ Raku function:
         %(
           "output" => "data.html"
         );
-        'raku'
+        'http://raku.org'
       ]
     );
 
-# Wrapper for Raku module command line scripts
+# Wrappers for Raku modules command line scripts
 
-Many Raku modules author nowadays ship their distribution with command line utilities to provide handy console
-way functionality for their modules.
+Many Raku modules author nowadays ship their distribution with command line tools to provide handy console
+functionality for theirs modules.
 
-Imagine we create a Sparrow wrapper for those scripts converting them back to functions:
-
+It's relatively easy repackages those tools into Sparrow plugins. For example for [App::Mi6](https://modules.raku.org/dist/App::Mi6:cpan:SKAJI) module `mi6` tool:
 
     task-run "mi6 release", "raku-utils-mi6", %(
 
@@ -56,13 +56,19 @@ Imagine we create a Sparrow wrapper for those scripts converting them back to fu
 
     );
 
-All what is required from Sparrow prospective is minimal amount of work:
-
+Sparrow wrapper:
 
     $ task.bash
 
     mi6 $(config args)
 
+    $ cat sparrow.json
+    {
+        "name" : "raku-utils-mi6",
+        "description" : "mi6 cli",
+        "version" : "0.0.1",
+        "category" : "utils"
+    }
 
     $ depends.raku
 
@@ -70,20 +76,20 @@ All what is required from Sparrow prospective is minimal amount of work:
 
 The last file is needed so that Sparrow could install Raku module dependency during plugin installation.
 
-So eventually we might have a repository of `raku-utils` plugins comes as Sparrow plugins:
+So eventually we might have a repository of `raku-utils` plugins for _every_ Raku module exposing command line interface:
 
     $ s6 --search raku-utils
 
-I might create a script that download all `zef` distribution, sorting out those that ship scripts and create Sparrow wrappers
-for all of them. That would add a dozens of new plugins at no cost to existing Sparrow Eco system!
+One day, I might create a script that would download all `zef` distribution, sorting out those having `bin/` scripts and create Sparrow wrappers
+for all of them. That would add a dozens of new plugins to existing Sparrow eco system at no cost. 
 
-Not even that, now people writing automation tasks could use all those scripts in Raku functional way.
-
+And this would make it availbale to run those scripts as pure Raku functions, using Sparrow plugins interface!
 
 # Conclusion
 
-I've introduced the idea of adding Sparrow plugins for exiting command Raku command line scripts shipped as part of Raku modules.
-I am interested to hear your feedback.
+I've introduced the idea of adding Sparrow plugins for exiting command Raku commad line tools shipped as a part of Raku modules.
+
+I'd happy to get a feedback on that.
 
 Thanks
 
